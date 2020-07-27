@@ -40,7 +40,7 @@ type ChannelThreadsList struct {
 
 type Threads struct {
 	ThreadId string `json:"_id"`
-	Msg      string `json:"msg`
+	Msg      string `json:"msg"`
 }
 
 type messagesResponse struct {
