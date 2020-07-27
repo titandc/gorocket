@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"fmt"
 	"bytes"
-	"net/http"
-	"html"
+	"encoding/json"
+	"fmt"
 	"github.com/titandc/gorocket/api"
+	"net/http"
 )
 
 type messagesResponse struct {
@@ -29,9 +29,11 @@ type Page struct {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/chat/postmessage
 func (c *Client) Send(channel *api.Channel, msg string) error {
-	body := fmt.Sprintf(`{ "channel": "%s", "text": "%s"}`, channel.Name, html.EscapeString(msg))
-	request, _ := http.NewRequest("POST", c.getUrl()+"/api/v1/chat.postMessage", bytes.NewBufferString(body))
+	values := map[string]string{"channel": channel.Name, "text": msg}
+	body, _ := json.Marshal(values)
 
+	request, err := http.NewRequest("POST", c.getUrl()+"/api/v1/chat.postMessage", bytes.NewBuffer(body))
+	_ =  err
 	response := new(messageResponse)
 
 	return c.doRequest(request, response)
