@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/detached/gorocket/realtime"
-	"github.com/detached/gorocket/api"
+	"github.com/titandc/gorocket/realtime"
+	"github.com/titandc/gorocket/api"
 	"fmt"
 )
 

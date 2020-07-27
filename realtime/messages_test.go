@@ -3,7 +3,7 @@ package realtime
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
-	"github.com/detached/gorocket/api"
+	"github.com/titandc/gorocket/api"
 )
 
 func TestClient_SubscribeToMessageStream(t *testing.T) {

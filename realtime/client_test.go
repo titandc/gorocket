@@ -3,8 +3,8 @@ package realtime
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
-	"github.com/detached/gorocket/common_testing"
-	"github.com/detached/gorocket/api"
+	"github.com/titandc/gorocket/common_testing"
+	"github.com/titandc/gorocket/api"
 )
 
 var (

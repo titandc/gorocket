@@ -3,7 +3,7 @@ package realtime
 import (
 	"github.com/gopackage/ddp"
 	"github.com/Jeffail/gabs"
-	"github.com/detached/gorocket/api"
+	"github.com/titandc/gorocket/api"
 	"log"
 	"fmt"
 )
