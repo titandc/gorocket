@@ -24,6 +24,7 @@ type SendMessageInfo struct {
 	Text   string `json:"msg"`
 	RoomId string `json:"rid"`
 	TmId   string `json:"tmid"`
+	TShow  bool   `json:"tshow"`
 }
 
 type Groups struct {
@@ -114,6 +115,7 @@ func (c *Client) SendReplyMsg(groupId, threadId, msg string) error {
 		MessageInfo: &SendMessageInfo{
 			Id:     c.randomId(),
 			Text:   msg,
+			TShow:	true,
 			RoomId: groupId, // channel ID
 			TmId:   threadId, // Thread/message ID
 		},
