@@ -2,23 +2,26 @@
 package rest
 
 import (
-	"net/http"
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"github.com/titandc/gorocket/api"
 	"io/ioutil"
 	"log"
-	"fmt"
+	"net/http"
 )
 
 type Client struct {
 	Protocol string
-	Host  string
-	Port  string
+	Host     string
+	Port     string
 
 	// Use this switch to see all network communication.
 	Debug bool
 
-	auth  *authInfo
+	auth *authInfo
 }
 
 type authInfo struct {
@@ -28,20 +31,33 @@ type authInfo struct {
 
 // The base for the most of the json responses
 type statusResponse struct {
-	Status string `json:"status"`
+	Status  string `json:"status"`
 	Message string `json:"message"`
 }
 
-func NewClient(host, port string, tls, debug bool) (*Client) {
+type RocketchatAuth struct {
+	Host   string
+	Port   string
+	Login  string
+	Passwd string
+	TLS    bool
+}
+
+func NewClient(auth *RocketchatAuth, debug bool) (*Client, error) {
 	var protocol string
 
-	if tls {
+	if auth.TLS {
 		protocol = "https"
 	} else {
 		protocol = "http"
 	}
 
-	return &Client{Host: host, Port: port, Protocol: protocol, Debug: debug}
+	c := &Client{Host: auth.Host, Port: auth.Port, Protocol: protocol, Debug: debug}
+	if err := c.Login(api.UserCredentials{Email: auth.Login, Password: auth.Passwd}); err != nil {
+		log.Println("Error while login: ", err)
+		return nil, err
+	}
+	return c, nil
 }
 
 func (c *Client) getUrl() string {
@@ -81,4 +97,11 @@ func (c *Client) doRequest(request *http.Request, responseBody interface{}) erro
 	}
 
 	return json.Unmarshal(bodyBytes, responseBody)
+}
+
+// Return random number
+func (c *Client) GetRandomId() string {
+	b := make([]byte, 17)
+	rand.Read(b)
+	return hex.EncodeToString(b)
 }

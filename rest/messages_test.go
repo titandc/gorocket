@@ -13,7 +13,7 @@ func TestRocket_SendAndReceive(t *testing.T) {
 
 	general := getChannel(rooms, "general")
 
-	err = rocket.Send(general, "Test")
+	_, err = rocket.Send("#general", "Test")
 	assert.Nil(t, err)
 
 	messages, err := rocket.GetMessages(general, &Page{Count: 10})

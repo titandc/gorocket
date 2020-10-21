@@ -7,6 +7,11 @@ import (
 	"github.com/titandc/gorocket/api"
 )
 
+type channelsIdCache struct {
+	Name string
+	Id int
+}
+
 type channelsResponse struct {
 	Success  bool `json:"success"`
 	Channels []api.Channel `json:"channels"`
